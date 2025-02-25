@@ -1,0 +1,30 @@
+### STS ###
+.classpath
+.factorypath
+.project
+.settings
+bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iml
+out/
+target/
+.run/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Gradle ###
+.gradle/
+build/
+gradle/
+gradlew
+gradlew.bat
