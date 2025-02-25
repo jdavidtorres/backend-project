@@ -16,29 +16,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements IUserService, UserDetailsService {
+public class UserServiceImpl implements IUserService {
 
 	private final IUserRepository userRepository;
 	private final AuthenticationManager authenticationManager;
 	private final TokenManager tokenManager;
 	private final PasswordEncoder passwordEncoder;
-
-	@Transactional(readOnly = true)
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		log.debug("Loading user by username: {}", username);
-		return userRepository.findByUsername(username)
-			.orElseThrow(() -> new UsernameNotFoundException("User not found"));
-	}
 
 	@Override
 	public LoginResponseDTO authenticate(LoginRequestDTO loginRequest) {
