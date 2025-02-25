@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -68,5 +70,23 @@ public class UserServiceImpl implements IUserService {
 		log.debug("Registered user {}", registerRequest.username());
 
 		return new RegisterResponseDTO(user.getUsername(), tokenManager.generateToken(user));
+	}
+
+	@Override
+	public String getCurrentUsername() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null || !(authentication.getPrincipal() instanceof UserEntity userDetails)) {
+			throw new IllegalStateException("No authenticated user found.");
+		}
+		return userDetails.getUsername();
+	}
+
+	@Override
+	public String getCurrentUserId() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null || !(authentication.getPrincipal() instanceof UserEntity userDetails)) {
+			throw new IllegalStateException("No authenticated user found.");
+		}
+		return userDetails.getId();
 	}
 }

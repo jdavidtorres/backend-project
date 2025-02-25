@@ -11,4 +11,8 @@ public interface IUserService extends UserDetailsService {
 	LoginResponseDTO authenticate(LoginRequestDTO loginRequest);
 
 	RegisterResponseDTO register(RegisterRequestDTO registerRequest);
+
+	String getCurrentUsername();
+
+	String getCurrentUserId();
 }
