@@ -1,7 +1,7 @@
 package co.com.jdti.coresecurity.configurations;
 
 import co.com.jdti.coresecurity.filter.JwtAuthenticationFilter;
-import co.com.jdti.coresecurity.services.IUserService;
+import co.com.jdti.coresecurity.services.impl.UserServiceImpl;
 import co.com.jdti.coresecurity.shared.TokenManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
 	private final TokenManager tokenManager;
-	private final IUserService userService;
+	private final UserServiceImpl userService;
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

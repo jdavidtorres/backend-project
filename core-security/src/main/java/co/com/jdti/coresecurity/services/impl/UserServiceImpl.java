@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements IUserService {
+public class UserServiceImpl implements IUserService, UserDetailsService {
 
 	private final IUserRepository userRepository;
 	private final AuthenticationManager authenticationManager;
@@ -75,18 +76,13 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public String getCurrentUsername() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication == null || !(authentication.getPrincipal() instanceof UserEntity userDetails)) {
-			throw new IllegalStateException("No authenticated user found.");
-		}
-		return userDetails.getUsername();
+		return authentication.getPrincipal().toString();
 	}
 
 	@Override
 	public String getCurrentUserId() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication == null || !(authentication.getPrincipal() instanceof UserEntity userDetails)) {
-			throw new IllegalStateException("No authenticated user found.");
-		}
-		return userDetails.getId();
+		UserEntity user = userRepository.findByUsername(getCurrentUsername())
+			.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		return user.getId();
 	}
 }

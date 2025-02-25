@@ -1,6 +1,6 @@
 package co.com.jdti.coresecurity.filter;
 
-import co.com.jdti.coresecurity.services.IUserService;
+import co.com.jdti.coresecurity.services.impl.UserServiceImpl;
 import co.com.jdti.coresecurity.shared.TokenManager;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -22,7 +22,7 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	private final TokenManager tokenManager;
-	private final IUserService userService;
+	private final UserServiceImpl userService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {

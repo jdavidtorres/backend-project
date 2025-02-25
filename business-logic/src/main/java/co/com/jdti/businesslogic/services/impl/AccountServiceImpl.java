@@ -4,7 +4,7 @@ import co.com.jdti.businesslogic.dtos.AccountDTO;
 import co.com.jdti.businesslogic.entities.AccountEntity;
 import co.com.jdti.businesslogic.repositories.IAccountRepository;
 import co.com.jdti.businesslogic.services.IAccountService;
-import co.com.jdti.coresecurity.services.impl.UserServiceImpl;
+import co.com.jdti.coresecurity.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import java.util.List;
 public class AccountServiceImpl implements IAccountService {
 
 	private final IAccountRepository accountRepository;
-	private final UserServiceImpl userService;
+	private final IUserService userService;
 
 	@Override
 	public List<AccountDTO> getMyAccounts() {
