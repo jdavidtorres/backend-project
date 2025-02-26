@@ -67,13 +67,12 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public String getCurrentUsername() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		return authentication.getPrincipal().toString();
+		return authentication.getName();
 	}
 
 	@Override
 	public String getCurrentUserId() {
-		UserEntity user = userRepository.findByUsername(getCurrentUsername())
-			.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		UserEntity user = userRepository.findByUsername(getCurrentUsername()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 		return user.getId();
 	}
 }
