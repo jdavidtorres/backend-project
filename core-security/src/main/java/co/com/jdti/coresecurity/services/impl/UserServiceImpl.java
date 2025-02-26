@@ -57,10 +57,11 @@ public class UserServiceImpl implements IUserService {
 		UserEntity user = new UserEntity();
 		user.setUsername(registerRequest.username());
 		user.setPassword(passwordEncoded);
-		userRepository.save(user);
-		log.debug("Registered user {}", registerRequest.username());
+		user = userRepository.save(user);
+		RegisterResponseDTO registerResponse = new RegisterResponseDTO(user.getId(), user.getUsername(), tokenManager.generateToken(user));
+		log.debug("Registered user {}", registerResponse.username());
 
-		return new RegisterResponseDTO(user.getUsername(), tokenManager.generateToken(user));
+		return registerResponse;
 	}
 
 	@Override
