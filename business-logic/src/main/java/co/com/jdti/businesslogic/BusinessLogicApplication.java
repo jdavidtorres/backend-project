@@ -41,5 +41,12 @@ public class BusinessLogicApplication implements CommandLineRunner {
 			.accountNumber("12345")
 			.userId(user.id())
 			.build());
+
+		accountRepository.save(AccountEntity.builder()
+			.name("Secundaria")
+			.balance(new BigDecimal("100.00"))
+			.accountNumber("54321")
+			.userId("12345")
+			.build());
 	}
 }
